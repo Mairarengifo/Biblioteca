@@ -28,7 +28,7 @@ class LibroController extends Controller
      */
     public function create()
     {
-        //
+        return view('libros.create');
     }
 
     /**
@@ -39,7 +39,16 @@ class LibroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $libro             = new Libro();
+        $libro->nombre     = $request->nombre;
+        $libro->autor      = $request->autor;
+        $libro->genero     = $request->genero;
+        $libro->editoria  = $request->editoria;
+        $libro->descripcion = $request->descripcion;
+
+        $libro->save();
+
+        return redirect()->route('libros.index');
     }
 
     /**
@@ -50,7 +59,10 @@ class LibroController extends Controller
      */
     public function show($id)
     {
-        //
+        $libro = Libro::findOrFail($id);
+        return view('Libros.show',[
+            'libro' => $libro,
+        ]);
     }
 
     /**
