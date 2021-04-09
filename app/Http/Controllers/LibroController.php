@@ -13,7 +13,7 @@ class LibroController extends Controller
      */
     public function index()
     {
-        $libros = Libro::all();
+        $libros = Libro::paginate(2);
 
         return view('Libros.index',[
             'libros' => $libros,
@@ -39,6 +39,14 @@ class LibroController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre'     =>'required|min:5|max:255',
+            'autor'     =>'required|min:5|max:255',
+            'genero'     =>'required|min:5|max:255',
+            'editoria'     =>'required|min:5|max:255',
+            'descripcion'     =>'required|min:5',
+        ]);
+
         $libro             = new Libro();
         $libro->nombre     = $request->nombre;
         $libro->autor      = $request->autor;
