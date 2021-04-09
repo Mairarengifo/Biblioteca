@@ -23,6 +23,12 @@
        <td>{{$libro->genero}}</td>
        <td>
             <a href="{{ route('libros.show',$libro->id) }}" class="btn btn-primary">Ver</a>
+            <a href="{{ route('libros.edit',$libro->id) }}" class="btn btn-success">Editar</a>
+            <form action="{{ route('libros.destroy', $libro->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger">Eliminar libro</button>
+            </form>
         </td>
      </tr>
      @endforeach
