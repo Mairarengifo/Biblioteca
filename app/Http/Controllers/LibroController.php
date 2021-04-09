@@ -48,7 +48,7 @@ class LibroController extends Controller
 
         $libro->save();
 
-        return redirect()->route('libros.index');
+        return redirect()->route('libros.index')->with('status', 'Nuevo libro creado');;
     }
 
     /**
@@ -73,7 +73,10 @@ class LibroController extends Controller
      */
     public function edit($id)
     {
-        //
+    $libro = Libro::findOrFail($id);
+    return view('Libros.edit',[
+        'libro' => $libro,
+    ]);
     }
 
     /**
@@ -85,7 +88,16 @@ class LibroController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $libro= Libro::findOrFail($id);
+        $libro->nombre      =$request->nombre;
+        $libro->autor      =$request->autor;
+        $libro->genero      =$request->genero;
+        $libro->editoria     =$request->editoria;
+        $libro->descripcion      =$request->descripcion;
+
+        $libro->save();
+
+        return redirect()->route('libros.index')->with('status', 'El libro fue modificado');
     }
 
     /**
@@ -96,6 +108,9 @@ class LibroController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $libro = Libro::findOrFail($id);
+        $libro->delete();
+
+        return redirect()->route('libros.index')->with('status', 'El libro fue eliminado');
     }
 }
